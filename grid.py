@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 from itertools import product
 from tqdm import tqdm
 
+# %%
+
 num_samples = 1000
 num_samples_entropy = 10000
 
@@ -29,6 +31,9 @@ def entropy(μ, σ):
 
 
 X, Y = np.meshgrid(μs, σs)
+
+
+# %%
 
 data = np.zeros((num_samples, num_samples))
 
@@ -68,5 +73,9 @@ idx, idy = np.unravel_index(np.argmax(data), np.array(data).shape)
 μ = X[idx, idy]
 σ = Y[idx, idy]
 print(f"μ: {μ}, σ: {σ}")
+
+# %%
+
+data = np.load("data.npy")
 
 # %%
