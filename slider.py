@@ -38,7 +38,7 @@ t = np.linspace(-1 + ε, 1 - ε, 1000)
 
 # Define initial parameters
 init_μ = 0
-init_σ = 1
+init_σ = 0.871
 
 lower = 0.15
 upper = 0.73
@@ -58,7 +58,8 @@ freq_slider = Slider(
     ax=ax_sigma,
     label="σ",
     valmin=np.exp(-20),
-    valmax=np.exp(2),
+    # valmax=np.exp(2),
+    valmax=1.0,
     valinit=init_σ,
     orientation="vertical",
 )
