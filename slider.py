@@ -25,7 +25,7 @@ def the_function(t, μ, σ):
 
 def entropy(μ, σ):
     pi_distribution = Normal(μ, σ)
-    pi_action = pi_distribution.sample((1000,))
+    pi_action = pi_distribution.sample((100000,))
 
     logp_pi = pi_distribution.log_prob(pi_action)
     logp_pi -= (2 * (np.log(2) - pi_action - softplus(-2 * pi_action)))
@@ -70,8 +70,8 @@ ax_mu = plt.axes([0.175, lower, 0.0225, upper])
 amp_slider = Slider(
     ax=ax_mu,
     label="μ",
-    valmin=-5,
-    valmax=5,
+    valmin=-2,
+    valmax=2,
     valinit=init_μ,
     orientation="vertical",
 )
@@ -82,7 +82,7 @@ ent_box = TextBox(ax=ax_entropy, label="ent", initial=entropy(init_μ, init_σ))
 # The function to be called anytime a slider's value changes
 def update(val):
     line.set_ydata(the_function(t, amp_slider.val, freq_slider.val))
-    ent_box.set_val(entropy(amp_slider.val, freq_slider.val))
+    # ent_box.set_val(entropy(amp_slider.val, freq_slider.val))
     fig.canvas.draw_idle()
 
 
@@ -93,16 +93,22 @@ amp_slider.on_changed(update)
 # Create a `matplotlib.widgets.Button` to reset the sliders to initial values.
 resetax = plt.axes([0.8, 0.025, 0.1, 0.04])
 button = Button(resetax, "Reset", hovercolor="0.975")
-
-
 def reset(event):
     freq_slider.reset()
     amp_slider.reset()
-
-
 button.on_clicked(reset)
+
+
+updateax = plt.axes([0.25, 0.025, 0.2, 0.04])
+button2 = Button(updateax, "Update Entropy", hovercolor="0.975")
+def update(event):
+    ent_box.set_val(entropy(amp_slider.val, freq_slider.val))
+button2.on_clicked(update)
 
 plt.show()
 
+
+# %%
+plt.savefig("slider.png")
 
 # %%
